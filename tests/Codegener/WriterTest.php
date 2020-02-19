@@ -47,4 +47,39 @@ class WriterTest extends TestCase
 
         $this->assertSame('something', file_get_contents($this->vfs->url() . '/dir/whatever'));
     }
+
+    /**
+     * @test
+     */
+    public function shouldBeOkayWhenMassFileAccess(): void
+    {
+        $this->target->writeMass([
+            $this->vfs->url() . '/dir/some-foo' => 'foo',
+            $this->vfs->url() . '/dir/some-bar' => 'bar',
+        ]);
+
+        $this->assertSame('foo', file_get_contents($this->vfs->url() . '/dir/some-foo'));
+        $this->assertSame('bar', file_get_contents($this->vfs->url() . '/dir/some-bar'));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldSkipWhenMassFileAccessAndFileExist(): void
+    {
+        $this->target->writeMass([
+            $this->vfs->url() . '/dir/some-foo' => 'foo',
+            $this->vfs->url() . '/dir/some-bar' => 'bar',
+        ]);
+
+        $this->target->writeMassOrPass([
+            $this->vfs->url() . '/dir/some-foo' => 'new-foo',
+            $this->vfs->url() . '/dir/some-bar' => 'new-bar',
+            $this->vfs->url() . '/dir/some-baz' => 'new-baz',
+        ]);
+
+        $this->assertSame('foo', file_get_contents($this->vfs->url() . '/dir/some-foo'));
+        $this->assertSame('bar', file_get_contents($this->vfs->url() . '/dir/some-bar'));
+        $this->assertSame('new-baz', file_get_contents($this->vfs->url() . '/dir/some-baz'));
+    }
 }

@@ -28,6 +28,33 @@ class Writer
         $this->logger = $logger;
     }
 
+    /**
+     * @param iterable $contents
+     * @param string $pathPrefix
+     */
+    public function writeMassOrPass(iterable $contents, $pathPrefix = ''): void
+    {
+        $this->writeMass($contents, $pathPrefix, false);
+    }
+
+    /**
+     * @param iterable $contents Array which should return array like [filePath => code]
+     * @param string $pathPrefix
+     * @param bool $skipWhenExists
+     */
+    public function writeMass(iterable $contents, $pathPrefix = '', bool $skipWhenExists = true): void
+    {
+        foreach ($contents as $filePath => $code) {
+            $path = $pathPrefix . $filePath;
+
+            if ($skipWhenExists) {
+                $this->write($path, $code);
+            } else {
+                $this->writeOrSkip($path, $code);
+            }
+        }
+    }
+
     public function writeOrSkip(string $path, $content): void
     {
         $this->write($path, $content, true);
