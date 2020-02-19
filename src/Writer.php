@@ -34,7 +34,7 @@ class Writer
      */
     public function writeMassOrPass(iterable $contents, $pathPrefix = ''): void
     {
-        $this->writeMass($contents, $pathPrefix, false);
+        $this->writeMass($contents, $pathPrefix, true);
     }
 
     /**
@@ -47,11 +47,7 @@ class Writer
         foreach ($contents as $filePath => $code) {
             $path = $pathPrefix . $filePath;
 
-            if ($skipWhenExists) {
-                $this->write($path, $code);
-            } else {
-                $this->writeOrSkip($path, $code);
-            }
+            $this->write($path, $code, $skipWhenExists);
         }
     }
 
