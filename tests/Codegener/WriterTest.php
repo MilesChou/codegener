@@ -35,4 +35,16 @@ class WriterTest extends TestCase
 
         $this->assertSame('something', file_get_contents($this->vfs->url() . '/dir/whatever'));
     }
+
+    /**
+     * @test
+     */
+    public function shouldSkipWhenFileExist(): void
+    {
+        $this->target->write($this->vfs->url() . '/dir/whatever', 'something');
+
+        $this->target->writeOrSkip($this->vfs->url() . '/dir/whatever', 'anotherthing');
+
+        $this->assertSame('something', file_get_contents($this->vfs->url() . '/dir/whatever'));
+    }
 }

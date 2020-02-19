@@ -28,6 +28,11 @@ class Writer
         $this->logger = $logger;
     }
 
+    public function writeOrSkip(string $path, $content): void
+    {
+        $this->write($path, $content, true);
+    }
+
     /**
      * @param string $path
      * @param string $content
