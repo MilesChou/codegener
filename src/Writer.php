@@ -64,6 +64,7 @@ class Writer
     public function write(string $path, $content, bool $skipWhenExists = false): void
     {
         if ($skipWhenExists && $this->filesystem->exists($path)) {
+            $this->logger->info("File '{$path}' exists, skip");
             return;
         }
 
