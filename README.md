@@ -21,19 +21,19 @@ This package can help to write code easily.
 Writer class need [Laravel Filesystem](), it's testable, and need instance implemented PSR-3 Logger interface.
 
 ```php
-public function __construct(Filesystem $filesystem, LoggerInterface $logger);
+public function __construct(Filesystem $filesystem, LoggerInterface $logger)
 ```
 
-Use `write()` method to put code instantly. Codegener will skip when `$skipWhenExists` is true.
+Use `write()` method to put code instantly. Codegener will overwrite when `$overwrite` is true.
 
 ```php
-public function write(string $path, $content, bool $skipWhenExists = false): void;
+public function write(string $path, $content, bool $overwrite = false): void
 ```
 
 Use `writeMass` if need generate many code.
 
 ```php
-public function writeMass(iterable $contents, $pathPrefix = '', bool $skipWhenExists = true): void;
+public function writeMass(iterable $contents, $pathPrefix = '', bool $overwrite = false): void
 ```
 
 ## Example
