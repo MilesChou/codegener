@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
-class ServiceProvider extends BaseServiceProvider
+class CodegenerServiceProvider extends BaseServiceProvider
 {
     public function register()
     {

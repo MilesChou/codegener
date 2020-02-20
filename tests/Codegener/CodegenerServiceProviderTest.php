@@ -3,16 +3,14 @@
 namespace Tests\Codegener;
 
 use Illuminate\Container\Container;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Filesystem\FilesystemServiceProvider;
-use MilesChou\Codegener\ServiceProvider;
+use MilesChou\Codegener\CodegenerServiceProvider;
 use MilesChou\Codegener\Writer;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use Psr\Log\Test\TestLogger;
 use Tests\TestCase;
 
-class ServiceProviderTest extends TestCase
+class CodegenerServiceProviderTest extends TestCase
 {
     /**
      * @var Container
@@ -38,7 +36,7 @@ class ServiceProviderTest extends TestCase
      */
     public function shouldAutoInjectWhenNothingBindInContainer(): void
     {
-        (new ServiceProvider($this->container))->register();
+        (new CodegenerServiceProvider($this->container))->register();
 
         $this->assertInstanceOf(Writer::class, $this->container->make(Writer::class));
     }
@@ -59,7 +57,7 @@ class ServiceProviderTest extends TestCase
 
         $this->container->instance($abstractLogger, $spy);
 
-        (new ServiceProvider($this->container))->register();
+        (new CodegenerServiceProvider($this->container))->register();
 
         /** @var Writer $writer */
         $writer = $this->container->make(Writer::class);
@@ -74,7 +72,7 @@ class ServiceProviderTest extends TestCase
     public function shouldUseLaravelDefaultFilesystemWhenBound(): void
     {
         (new FilesystemServiceProvider($this->container))->register();
-        (new ServiceProvider($this->container))->register();
+        (new CodegenerServiceProvider($this->container))->register();
 
         $this->assertInstanceOf(Writer::class, $this->container->make(Writer::class));
     }
