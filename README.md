@@ -41,10 +41,12 @@ public function writeMass(iterable $contents, $pathPrefix = '', bool $overwrite 
 Following is an example code.
 
 ```php
-$writer->writeMass([
-    '/path/to/your/project/some-foo' => 'foo',
-    '/path/to/your/project/some-bar' => 'bar',
-]);
+$code = [
+    '/some-foo' => 'foo',
+    '/some-bar' => 'bar',
+];
+
+$writer->writeMass($code, '/path/to/your/project');
 ```
 
 Codegener will generate two files.
