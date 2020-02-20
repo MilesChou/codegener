@@ -6,6 +6,7 @@
 [![Latest Stable Version](https://poser.pugx.org/MilesChou/codegener/v/stable)](https://packagist.org/packages/MilesChou/codegener)
 [![Total Downloads](https://poser.pugx.org/MilesChou/codegener/d/total.svg)](https://packagist.org/packages/MilesChou/codegener)
 [![License](https://poser.pugx.org/MilesChou/codegener/license)](https://packagist.org/packages/MilesChou/codegener)
+[![Beerpay](https://beerpay.io/MilesChou/codegener/badge.svg?style=flat)](https://beerpay.io/MilesChou/codegener)
 
 The helper for generate code.
 
