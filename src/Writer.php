@@ -30,41 +30,13 @@ class Writer
     }
 
     /**
-     * @param iterable $contents
-     * @param string $pathPrefix
-     */
-    public function writeMassOrPass(iterable $contents, $pathPrefix = ''): void
-    {
-        $this->writeMass($contents, $pathPrefix, true);
-    }
-
-    /**
-     * @param iterable $contents Array which should return array like [filePath => code]
-     * @param string $pathPrefix
-     * @param bool $skipWhenExists
-     */
-    public function writeMass(iterable $contents, $pathPrefix = '', bool $skipWhenExists = true): void
-    {
-        foreach ($contents as $filePath => $code) {
-            $path = $pathPrefix . $filePath;
-
-            $this->write($path, $code, $skipWhenExists);
-        }
-    }
-
-    public function writeOrSkip(string $path, $content): void
-    {
-        $this->write($path, $content, true);
-    }
-
-    /**
      * @param string $path
      * @param string $content
-     * @param bool $skipWhenExists
+     * @param bool $overwrite
      */
-    public function write(string $path, $content, bool $skipWhenExists = false): void
+    public function write(string $path, $content, bool $overwrite = false): void
     {
-        if ($skipWhenExists && $this->filesystem->exists($path)) {
+        if (!$overwrite && $this->filesystem->exists($path)) {
             $this->logger->info("File '{$path}' exists, skip");
             return;
         }
@@ -83,5 +55,33 @@ class Writer
         if (false === $success) {
             throw new RuntimeException("Write code into {$path} failed.");
         }
+    }
+
+    /**
+     * @param iterable $contents Array which should return array like [filePath => code]
+     * @param string $pathPrefix
+     * @param bool $overwrite
+     */
+    public function writeMass(iterable $contents, $pathPrefix = '', bool $overwrite = false): void
+    {
+        foreach ($contents as $filePath => $code) {
+            $path = $pathPrefix . $filePath;
+
+            $this->write($path, $code, $overwrite);
+        }
+    }
+
+    /**
+     * @param iterable $contents
+     * @param string $pathPrefix
+     */
+    public function overwriteMass(iterable $contents, $pathPrefix = ''): void
+    {
+        $this->writeMass($contents, $pathPrefix, true);
+    }
+
+    public function overwrite(string $path, $content): void
+    {
+        $this->write($path, $content, true);
     }
 }

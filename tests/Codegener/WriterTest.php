@@ -39,13 +39,24 @@ class WriterTest extends TestCase
     /**
      * @test
      */
-    public function shouldSkipWhenFileExist(): void
+    public function shouldSkipWhenOverwriteIsFalse(): void
+    {
+        $this->target->write($this->vfs->url() . '/dir/whatever', 'something');
+        $this->target->write($this->vfs->url() . '/dir/whatever', 'new-something', false);
+
+        $this->assertSame('something', file_get_contents($this->vfs->url() . '/dir/whatever'));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldOverwriteWhenFileExist(): void
     {
         $this->target->write($this->vfs->url() . '/dir/whatever', 'something');
 
-        $this->target->writeOrSkip($this->vfs->url() . '/dir/whatever', 'anotherthing');
+        $this->target->overwrite($this->vfs->url() . '/dir/whatever', 'anotherthing');
 
-        $this->assertSame('something', file_get_contents($this->vfs->url() . '/dir/whatever'));
+        $this->assertSame('anotherthing', file_get_contents($this->vfs->url() . '/dir/whatever'));
     }
 
     /**
@@ -65,14 +76,33 @@ class WriterTest extends TestCase
     /**
      * @test
      */
-    public function shouldSkipWhenMassFileAccessAndFileExist(): void
+    public function shouldOverwriteUseOverwriteMass(): void
     {
         $this->target->writeMass([
             $this->vfs->url() . '/dir/some-foo' => 'foo',
             $this->vfs->url() . '/dir/some-bar' => 'bar',
         ]);
 
-        $this->target->writeMassOrPass([
+        $this->target->overwriteMass([
+            $this->vfs->url() . '/dir/some-foo' => 'new-foo',
+            $this->vfs->url() . '/dir/some-bar' => 'new-bar',
+        ]);
+
+        $this->assertSame('new-foo', file_get_contents($this->vfs->url() . '/dir/some-foo'));
+        $this->assertSame('new-bar', file_get_contents($this->vfs->url() . '/dir/some-bar'));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldSkipWhenFileExists(): void
+    {
+        $this->target->writeMass([
+            $this->vfs->url() . '/dir/some-foo' => 'foo',
+            $this->vfs->url() . '/dir/some-bar' => 'bar',
+        ]);
+
+        $this->target->writeMass([
             $this->vfs->url() . '/dir/some-foo' => 'new-foo',
             $this->vfs->url() . '/dir/some-bar' => 'new-bar',
             $this->vfs->url() . '/dir/some-baz' => 'new-baz',
