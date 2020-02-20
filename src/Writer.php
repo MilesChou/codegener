@@ -4,6 +4,7 @@ namespace MilesChou\Codegener;
 
 use Illuminate\Filesystem\Filesystem;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use RuntimeException;
 
 class Writer
@@ -20,12 +21,12 @@ class Writer
 
     /**
      * @param Filesystem $filesystem
-     * @param LoggerInterface $logger
+     * @param LoggerInterface|null $logger
      */
-    public function __construct(Filesystem $filesystem, LoggerInterface $logger)
+    public function __construct(Filesystem $filesystem, LoggerInterface $logger = null)
     {
         $this->filesystem = $filesystem;
-        $this->logger = $logger;
+        $this->logger = $logger ?? new NullLogger();
     }
 
     /**

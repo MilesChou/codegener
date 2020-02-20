@@ -25,7 +25,7 @@ class CodegenerServiceProvider extends BaseServiceProvider
         return $this->app->make(Filesystem::class);
     }
 
-    private function resolveLogger(): LoggerInterface
+    private function resolveLogger(): ?LoggerInterface
     {
         if ($this->app->bound('log')) {
             return $this->app->make('log');
@@ -35,6 +35,6 @@ class CodegenerServiceProvider extends BaseServiceProvider
             return $this->app->make(LoggerInterface::class);
         }
 
-        return new NullLogger();
+        return null;
     }
 }
