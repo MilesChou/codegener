@@ -8,3 +8,58 @@
 [![License](https://poser.pugx.org/MilesChou/codegener/license)](https://packagist.org/packages/MilesChou/codegener)
 
 The helper for generate code.
+
+## Concept
+
+Sometimes, we need to generate many code, like [Scaffold](https://en.wikipedia.org/wiki/Scaffold_(programming)), [compiled code](https://en.wikipedia.org/wiki/Code_generation_(compiler)), even document.
+
+This package can help to write code easily.
+
+## Usage
+
+Writer class need [Laravel Filesystem](), it's testable, and need instance implemented PSR-3 Logger interface.
+
+```php
+public function __construct(Filesystem $filesystem, LoggerInterface $logger);
+```
+
+Use `write()` method to put code instantly. Codegener will skip when `$skipWhenExists` is true.
+
+```php
+public function write(string $path, $content, bool $skipWhenExists = false): void;
+```
+
+Use `writeMass` if need generate many code.
+
+```php
+public function writeMass(iterable $contents, $pathPrefix = '', bool $skipWhenExists = true): void;
+```
+
+## Example
+
+Following is an example code.
+
+```php
+$writer->writeMass([
+    '/path/to/your/project/some-foo' => 'foo',
+    '/path/to/your/project/some-bar' => 'bar',
+]);
+```
+
+Codegener will generate two files.
+
+```
+$ cat /path/to/your/project/some-foo
+foo
+$ cat /path/to/your/project/some-bar
+bar
+```
+
+## Example Projects
+
+* [Schemarkdown](https://github.com/MilesChou/schemarkdown)
+* [Laravel Eloquent Generator](https://github.com/104corp/laravel-eloquent-generator)
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE) for more information.
