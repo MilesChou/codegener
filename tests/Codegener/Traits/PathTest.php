@@ -51,4 +51,26 @@ class PathTest extends TestCase
 
         $this->assertSame('/a/b/c/d/e/f', $this->target->formatPath('d/e/f'));
     }
+
+    /**
+     * @test
+     */
+    public function shouldReturnAppendedPathWhenCallAppendBasePathWithNormalPath(): void
+    {
+        $this->target->setBasePath('/a/b/c');
+        $this->target->appendBasePath('d/e/f');
+
+        $this->assertSame('/a/b/c/d/e/f', $this->target->basePath());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnAppendedPathWhenCallAppendBasePathWithAbsolutePath(): void
+    {
+        $this->target->setBasePath('/a/b/c');
+        $this->target->appendBasePath('/d/e/f');
+
+        $this->assertSame('/a/b/c/d/e/f', $this->target->basePath());
+    }
 }
