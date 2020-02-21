@@ -27,6 +27,8 @@ trait Path
      */
     public function formatPath($path): string
     {
+        $path = (string)$path;
+
         // if $path is absolute path, do nothing
         if (strpos($path, '/') === 0) {
             return $path;
