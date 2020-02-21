@@ -33,7 +33,7 @@ public function write(string $path, $content, bool $overwrite = false): void
 Use `writeMass` if need generate many code.
 
 ```php
-public function writeMass(iterable $contents, $pathPrefix = '', bool $overwrite = false): void
+public function writeMass(iterable $contents, bool $overwrite = false): void
 ```
 
 ## Traits
@@ -48,12 +48,14 @@ Following traits is helper for process env and path.
 Following is an example code.
 
 ```php
+$writer->setBasePath('/path/to/your/project');
+
 $code = [
-    '/some-foo' => 'foo',
-    '/some-bar' => 'bar',
+    'some-foo' => 'foo',
+    'some-bar' => 'bar',
 ];
 
-$writer->writeMass($code, '/path/to/your/project');
+$writer->writeMass($code);
 ```
 
 Codegener will generate two files.
