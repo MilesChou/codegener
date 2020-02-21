@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MilesChou\Codegener;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 
 class CodegenerServiceProvider extends BaseServiceProvider
 {
