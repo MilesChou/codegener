@@ -41,7 +41,18 @@ trait Path
      */
     public function setBasePath(string $basePath)
     {
-        $this->basePath = $basePath;
+        $this->basePath = rtrim($basePath, '/');
+
+        return $this;
+    }
+
+    /**
+     * @param string $path
+     * @return static
+     */
+    public function appendBasePath(string $path)
+    {
+        $this->basePath = $this->formatPath(trim($path, '/'));
 
         return $this;
     }

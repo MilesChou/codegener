@@ -40,7 +40,6 @@ public function writeMass(iterable $contents, bool $overwrite = false): void
 
 Following traits is helper for process env and path.
 
-* [Environment](/src/Traits/Environment.php) 
 * [Path](/src/Traits/Path.php)
 
 ## Example
