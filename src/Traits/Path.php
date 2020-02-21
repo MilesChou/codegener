@@ -18,7 +18,7 @@ trait Path
      */
     public function basePath(): string
     {
-        return $this->basePath ?? ((string)getcwd());
+        return $this->basePath ?? (string)getcwd();
     }
 
     /**
