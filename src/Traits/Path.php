@@ -29,6 +29,10 @@ trait Path
     {
         $path = (string)$path;
 
+        if ('' === $path) {
+            return $this->basePath();
+        }
+
         // if $path is absolute path, do nothing
         if (strpos($path, '/') === 0) {
             return $path;
