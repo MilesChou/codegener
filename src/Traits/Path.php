@@ -18,24 +18,14 @@ trait Path
      */
     public function basePath(): string
     {
-        return $this->basePath ?? getcwd();
-    }
-
-    /**
-     * Inject base path if need test
-     *
-     * @param string $basePath
-     */
-    public function setBasePath(string $basePath): void
-    {
-        $this->basePath = $basePath;
+        return $this->basePath ?? ((string)getcwd());
     }
 
     /**
      * @param string $path
      * @return string
      */
-    protected function normalizePath($path): string
+    public function formatPath($path): string
     {
         // if $path is absolute path, do nothing
         if (strpos($path, '/') === 0) {
@@ -43,5 +33,16 @@ trait Path
         }
 
         return $this->basePath() . '/' . $path;
+    }
+
+    /**
+     * @param string $basePath
+     * @return static
+     */
+    public function setBasePath(string $basePath)
+    {
+        $this->basePath = $basePath;
+
+        return $this;
     }
 }

@@ -61,7 +61,8 @@ class CodegenerServiceProviderTest extends TestCase
 
         /** @var Writer $writer */
         $writer = $this->container->make(Writer::class);
-        $writer->write($this->vfs->url() . '/whatever', 'something');
+        $writer->setBasePath($this->vfs->url());
+        $writer->write('whatever', 'something');
 
         $this->assertTrue($spy->hasInfoRecords());
     }

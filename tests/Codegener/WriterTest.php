@@ -19,6 +19,7 @@ class WriterTest extends TestCase
         parent::setUp();
 
         $this->target = new Writer(new Filesystem(), new NullLogger());
+        $this->target->setBasePath($this->vfs->url());
     }
 
     protected function tearDown(): void
@@ -31,9 +32,9 @@ class WriterTest extends TestCase
      */
     public function shouldBeOkayWhenWriteNormalCode(): void
     {
-        $this->target->write($this->vfs->url() . '/dir/whatever', 'something');
+        $this->target->write('dir/whatever', 'something');
 
-        $this->assertSame('something', file_get_contents($this->vfs->url() . '/dir/whatever'));
+        $this->assertSame('something', file_get_contents($this->target->formatPath('dir/whatever')));
     }
 
     /**
@@ -41,10 +42,10 @@ class WriterTest extends TestCase
      */
     public function shouldSkipWhenOverwriteIsFalse(): void
     {
-        $this->target->write($this->vfs->url() . '/dir/whatever', 'something');
-        $this->target->write($this->vfs->url() . '/dir/whatever', 'new-something', false);
+        $this->target->write('dir/whatever', 'something');
+        $this->target->write('dir/whatever', 'new-something', false);
 
-        $this->assertSame('something', file_get_contents($this->vfs->url() . '/dir/whatever'));
+        $this->assertSame('something', file_get_contents($this->target->formatPath('dir/whatever')));
     }
 
     /**
@@ -52,11 +53,11 @@ class WriterTest extends TestCase
      */
     public function shouldOverwriteWhenFileExist(): void
     {
-        $this->target->write($this->vfs->url() . '/dir/whatever', 'something');
+        $this->target->write('dir/whatever', 'something');
 
-        $this->target->overwrite($this->vfs->url() . '/dir/whatever', 'anotherthing');
+        $this->target->overwrite('dir/whatever', 'anotherthing');
 
-        $this->assertSame('anotherthing', file_get_contents($this->vfs->url() . '/dir/whatever'));
+        $this->assertSame('anotherthing', file_get_contents($this->target->formatPath('dir/whatever')));
     }
 
     /**
@@ -65,12 +66,12 @@ class WriterTest extends TestCase
     public function shouldBeOkayWhenMassFileAccess(): void
     {
         $this->target->writeMass([
-            $this->vfs->url() . '/dir/some-foo' => 'foo',
-            $this->vfs->url() . '/dir/some-bar' => 'bar',
+            'dir/some-foo' => 'foo',
+            'dir/some-bar' => 'bar',
         ]);
 
-        $this->assertSame('foo', file_get_contents($this->vfs->url() . '/dir/some-foo'));
-        $this->assertSame('bar', file_get_contents($this->vfs->url() . '/dir/some-bar'));
+        $this->assertSame('foo', file_get_contents($this->target->formatPath('dir/some-foo')));
+        $this->assertSame('bar', file_get_contents($this->target->formatPath('dir/some-bar')));
     }
 
     /**
@@ -79,17 +80,17 @@ class WriterTest extends TestCase
     public function shouldOverwriteUseOverwriteMass(): void
     {
         $this->target->writeMass([
-            $this->vfs->url() . '/dir/some-foo' => 'foo',
-            $this->vfs->url() . '/dir/some-bar' => 'bar',
+            'dir/some-foo' => 'foo',
+            'dir/some-bar' => 'bar',
         ]);
 
         $this->target->overwriteMass([
-            $this->vfs->url() . '/dir/some-foo' => 'new-foo',
-            $this->vfs->url() . '/dir/some-bar' => 'new-bar',
+            'dir/some-foo' => 'new-foo',
+            'dir/some-bar' => 'new-bar',
         ]);
 
-        $this->assertSame('new-foo', file_get_contents($this->vfs->url() . '/dir/some-foo'));
-        $this->assertSame('new-bar', file_get_contents($this->vfs->url() . '/dir/some-bar'));
+        $this->assertSame('new-foo', file_get_contents($this->target->formatPath('dir/some-foo')));
+        $this->assertSame('new-bar', file_get_contents($this->target->formatPath('dir/some-bar')));
     }
 
     /**
@@ -98,18 +99,18 @@ class WriterTest extends TestCase
     public function shouldSkipWhenFileExists(): void
     {
         $this->target->writeMass([
-            $this->vfs->url() . '/dir/some-foo' => 'foo',
-            $this->vfs->url() . '/dir/some-bar' => 'bar',
+            'dir/some-foo' => 'foo',
+            'dir/some-bar' => 'bar',
         ]);
 
         $this->target->writeMass([
-            $this->vfs->url() . '/dir/some-foo' => 'new-foo',
-            $this->vfs->url() . '/dir/some-bar' => 'new-bar',
-            $this->vfs->url() . '/dir/some-baz' => 'new-baz',
+            'dir/some-foo' => 'new-foo',
+            'dir/some-bar' => 'new-bar',
+            'dir/some-baz' => 'new-baz',
         ]);
 
-        $this->assertSame('foo', file_get_contents($this->vfs->url() . '/dir/some-foo'));
-        $this->assertSame('bar', file_get_contents($this->vfs->url() . '/dir/some-bar'));
-        $this->assertSame('new-baz', file_get_contents($this->vfs->url() . '/dir/some-baz'));
+        $this->assertSame('foo', file_get_contents($this->target->formatPath('dir/some-foo')));
+        $this->assertSame('bar', file_get_contents($this->target->formatPath('dir/some-bar')));
+        $this->assertSame('new-baz', file_get_contents($this->target->formatPath('dir/some-baz')));
     }
 }

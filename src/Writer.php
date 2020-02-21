@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace MilesChou\Codegener;
 
 use Illuminate\Filesystem\Filesystem;
+use MilesChou\Codegener\Traits\Path;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use RuntimeException;
 
 class Writer
 {
+    use Path;
+
     /**
      * @var Filesystem
      */
@@ -38,6 +41,8 @@ class Writer
      */
     public function write(string $path, $content, bool $overwrite = false): void
     {
+        $path = $this->formatPath($path);
+
         if (!$overwrite && $this->filesystem->exists($path)) {
             $this->logger->info("File '{$path}' exists, skip");
             return;
@@ -60,26 +65,22 @@ class Writer
     }
 
     /**
-     * @param iterable $contents Array which should return array like [filePath => code]
-     * @param string $pathPrefix
+     * @param iterable $contents Array which should return array like [path => code]
      * @param bool $overwrite
      */
-    public function writeMass(iterable $contents, $pathPrefix = '', bool $overwrite = false): void
+    public function writeMass(iterable $contents, bool $overwrite = false): void
     {
-        foreach ($contents as $filePath => $code) {
-            $path = $pathPrefix . $filePath;
-
+        foreach ($contents as $path => $code) {
             $this->write($path, $code, $overwrite);
         }
     }
 
     /**
      * @param iterable $contents
-     * @param string $pathPrefix
      */
-    public function overwriteMass(iterable $contents, $pathPrefix = ''): void
+    public function overwriteMass(iterable $contents): void
     {
-        $this->writeMass($contents, $pathPrefix, true);
+        $this->writeMass($contents, true);
     }
 
     public function overwrite(string $path, $content): void
