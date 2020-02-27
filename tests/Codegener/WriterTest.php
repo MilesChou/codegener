@@ -113,4 +113,19 @@ class WriterTest extends TestCase
         $this->assertSame('bar', file_get_contents($this->target->formatPath('dir/some-bar')));
         $this->assertSame('new-baz', file_get_contents($this->target->formatPath('dir/some-baz')));
     }
+
+    /**
+     * @test
+     */
+    public function shouldReturnNewInstanceWhenWithMethod(): void
+    {
+        $this->target->setBasePath('/a/b/c');
+        $this->target->appendBasePath('/d/e/f');
+
+        $clone = $this->target->withBasePath('/i/j/k')
+            ->withAppendBasePath('/x/y/z');
+
+        $this->assertSame('/a/b/c/d/e/f', $this->target->basePath());
+        $this->assertSame('/i/j/k/x/y/z', $clone->basePath());
+    }
 }

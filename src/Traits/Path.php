@@ -62,30 +62,4 @@ trait Path
 
         return $this;
     }
-
-    /**
-     * Clone new instance with append base path
-     *
-     * @param string $basePath
-     * @return static
-     */
-    public function withAppendBasePath(string $basePath)
-    {
-        $clone = clone $this;
-
-        return $clone->appendBasePath($basePath);
-    }
-
-    /**
-     * Clone new instance with base path
-     *
-     * @param string $basePath
-     * @return static
-     */
-    public function withBasePath(string $basePath)
-    {
-        $clone = clone $this;
-
-        return $clone->setBasePath($basePath);
-    }
 }
