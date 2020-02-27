@@ -73,4 +73,19 @@ class PathTest extends TestCase
 
         $this->assertSame('/a/b/c/d/e/f', $this->target->basePath());
     }
+
+    /**
+     * @test
+     */
+    public function shouldReturnNewInstanceWhenWithMethod(): void
+    {
+        $this->target->setBasePath('/a/b/c');
+        $this->target->appendBasePath('/d/e/f');
+
+        $clone = $this->target->withBasePath('/i/j/k')
+            ->withAppendBasePath('/x/y/z');
+
+        $this->assertSame('/a/b/c/d/e/f', $this->target->basePath());
+        $this->assertSame('/i/j/k/x/y/z', $clone->basePath());
+    }
 }
