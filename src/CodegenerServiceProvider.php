@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace MilesChou\Codegener;
 
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Illuminate\Support\ServiceProvider;
 use Psr\Log\LoggerInterface;
 
-class CodegenerServiceProvider extends BaseServiceProvider
+class CodegenerServiceProvider extends ServiceProvider
 {
     public function register()
     {
