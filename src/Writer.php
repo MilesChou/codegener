@@ -39,7 +39,7 @@ class Writer
      * @param string $content
      * @param bool $overwrite
      */
-    public function write(string $path, $content, bool $overwrite = false): void
+    public function write(string $path, string $content, bool $overwrite = false): void
     {
         $path = $this->formatPath($path);
 
@@ -65,7 +65,7 @@ class Writer
     }
 
     /**
-     * @param iterable $contents Array which should return array like [path => code]
+     * @param iterable<string> $contents Array which should return array like [path => code]
      * @param bool $overwrite
      */
     public function writeMass(iterable $contents, bool $overwrite = false): void
@@ -76,14 +76,14 @@ class Writer
     }
 
     /**
-     * @param iterable $contents
+     * @param iterable<string> $contents
      */
     public function overwriteMass(iterable $contents): void
     {
         $this->writeMass($contents, true);
     }
 
-    public function overwrite(string $path, $content): void
+    public function overwrite(string $path, string $content): void
     {
         $this->write($path, $content, true);
     }
