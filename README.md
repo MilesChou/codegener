@@ -1,6 +1,6 @@
 # Codegener
 
-[![Build Status](https://travis-ci.com/MilesChou/codegener.svg?branch=master)](https://travis-ci.com/MilesChou/codegener)
+![tests](https://github.com/MilesChou/codegener/workflows/tests/badge.svg)
 [![codecov](https://codecov.io/gh/MilesChou/codegener/branch/master/graph/badge.svg)](https://codecov.io/gh/MilesChou/codegener)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/28b1ac29684847789995fe1c46f598ac)](https://www.codacy.com/manual/MilesChou/codegener)
 [![Latest Stable Version](https://poser.pugx.org/MilesChou/codegener/v/stable)](https://packagist.org/packages/MilesChou/codegener)
