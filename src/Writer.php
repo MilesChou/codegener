@@ -14,15 +14,9 @@ class Writer
 {
     use Path;
 
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
+    private Filesystem $filesystem;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
 
     /**
      * @param Filesystem $filesystem
@@ -94,7 +88,7 @@ class Writer
      * @param string $basePath
      * @return static
      */
-    public function withAppendBasePath(string $basePath)
+    public function withAppendBasePath(string $basePath): Writer
     {
         $clone = clone $this;
 
@@ -107,7 +101,7 @@ class Writer
      * @param string $basePath
      * @return static
      */
-    public function withBasePath(string $basePath)
+    public function withBasePath(string $basePath): Writer
     {
         $clone = clone $this;
 

@@ -53,7 +53,9 @@ class CodegenerServiceProviderTest extends TestCase
      */
     public function shouldUseLaravelDefaultLoggerWhenBound($abstractLogger): void
     {
-        $spy = new TestLogger();
+        $spy = $this->createMock(LoggerInterface::class);
+        $spy->expects($this->once())
+            ->method('info');
 
         $this->container->instance($abstractLogger, $spy);
 
@@ -63,8 +65,6 @@ class CodegenerServiceProviderTest extends TestCase
         $writer = $this->container->make(Writer::class);
         $writer->setBasePath($this->vfs->url());
         $writer->write('whatever', 'something');
-
-        $this->assertTrue($spy->hasInfoRecords());
     }
 
     /**

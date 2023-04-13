@@ -13,7 +13,7 @@
     "require": {
         "php": "^8.0",
         "illuminate/filesystem": "^8 | ^9 | ^10",
-        "psr/log": "^1.1"
+        "psr/log": "^1.1 | ^2.0 | 3.0"
     },
     "require-dev": {
         "illuminate/container": "^8 | ^9 | ^10",

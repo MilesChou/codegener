@@ -9,13 +9,13 @@ trait Path
     /**
      * @var string
      */
-    private $basePath;
+    private string $basePath;
 
     /**
      * @param string $path
      * @return static
      */
-    public function appendBasePath(string $path)
+    public function appendBasePath(string $path): static
     {
         $this->basePath = $this->formatPath(trim($path, '/'));
 
@@ -36,7 +36,7 @@ trait Path
      * @param string $path
      * @return string
      */
-    public function formatPath($path): string
+    public function formatPath(string $path): string
     {
         $path = (string)$path;
 
@@ -45,7 +45,7 @@ trait Path
         }
 
         // if $path is absolute path, do nothing
-        if (strpos($path, '/') === 0) {
+        if (str_starts_with($path, '/')) {
             return $path;
         }
 
@@ -56,7 +56,7 @@ trait Path
      * @param string $basePath
      * @return static
      */
-    public function setBasePath(string $basePath)
+    public function setBasePath(string $basePath): static
     {
         $this->basePath = rtrim($basePath, '/');
 
